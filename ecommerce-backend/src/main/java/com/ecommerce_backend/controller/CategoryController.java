@@ -33,6 +33,7 @@ public class CategoryController {
         return new ResponseEntity<>("Category Created" , HttpStatus.CREATED);
     }
 
+//    Delete a category
     @DeleteMapping("api/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
         try{
@@ -45,10 +46,18 @@ public class CategoryController {
         catch(ResponseStatusException e){
             return new ResponseEntity<>(e.getReason() , e.getStatusCode());
         }
-
     }
 
-
+    @PutMapping("api/admin/categories/{categoryId}")
+    public ResponseEntity<String> updateCategory(@RequestBody Category category , @PathVariable Long categoryId){
+        try{
+            Category updatedCategory = categoryService.updateCategory(category , categoryId);
+            return new ResponseEntity<>("Category Updated for " + categoryId , HttpStatus.CREATED);
+        }
+        catch(ResponseStatusException e){
+            return new ResponseEntity<>(e.getReason() , e.getStatusCode());
+        }
+    }
 
 
 }
