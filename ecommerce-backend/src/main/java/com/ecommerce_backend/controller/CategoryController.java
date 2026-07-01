@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestMapping("/api")
 @RestController
 public class CategoryController {
 
@@ -20,21 +21,21 @@ public class CategoryController {
     private CategoryService categoryService;
 
 //    Get all product categories
-    @GetMapping("/api/public/categories")
+    @GetMapping("/public/categories")
     public ResponseEntity<List<Category>> getCategories(){
         List<Category> list = categoryService.getCategories();
         return new ResponseEntity<>(list , HttpStatus.OK);
     }
 
 //    Create a new product category
-    @PostMapping("/api/admin/category")
+    @PostMapping("/admin/category")
     public ResponseEntity<String> createCategory(@RequestBody Category category){
         categoryService.createCategory(category);
         return new ResponseEntity<>("Category Created" , HttpStatus.CREATED);
     }
 
 //    Delete a category
-    @DeleteMapping("api/admin/categories/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
         try{
             String status = categoryService.deleteCategory(categoryId);
@@ -48,7 +49,7 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("api/admin/categories/{categoryId}")
+    @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody Category category , @PathVariable Long categoryId){
         try{
             Category updatedCategory = categoryService.updateCategory(category , categoryId);
